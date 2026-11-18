@@ -100,6 +100,17 @@ function ProgressLine({ session, id }: { session: Session; id: string }) {
   );
 }
 
+function QuestionHints({ hints }: { hints: string[] }) {
+  if (hints.length === 0) return null;
+  return (
+    <ul className="question-hints" aria-label="Questions to consider">
+      {hints.map((hint) => (
+        <li key={hint}>{hint}</li>
+      ))}
+    </ul>
+  );
+}
+
 // ---------- 1 welcome ----------
 
 export function Welcome({
@@ -121,8 +132,8 @@ export function Welcome({
           <dd>A markdown file. You save it, then edit and publish it yourself.</dd>
         </div>
         <div>
-          <dt>Your voice</dt>
-          <dd>Turned into text on this computer, then the recording is deleted. Nothing is sent anywhere.</dd>
+          <dt>Your audio</dt>
+          <dd>Recordings and uploaded audio are transcribed on this computer, then discarded. Nothing is sent anywhere.</dd>
         </div>
         <div>
           <dt>You are in charge</dt>
@@ -311,6 +322,7 @@ export function QuestionScreen({
       )}
       <ProgressLine session={session} id={question.id} />
       <Heading level={2}>{question.prompt}</Heading>
+      <QuestionHints hints={question.hints} />
       {starts.length > 0 && (
         <div className="starts" role="group" aria-label="Starting points">
           <p className="muted">Pick a starting point, or describe your own.</p>
@@ -328,7 +340,6 @@ export function QuestionScreen({
         label="Your answer"
         value={session.answers[question.id] ?? ""}
         onChange={(value) => onAnswer(question.id, value)}
-        hints={question.hints}
         primary
         rows={6}
         onPendingChange={onPending}
@@ -404,6 +415,7 @@ export function ApproachesScreen({
     <section>
       <ProgressLine session={session} id={question.id} />
       <Heading level={2}>{question.prompt}</Heading>
+      <QuestionHints hints={question.hints} />
       {approaches.length === 0 ? (
         <div className="panel">
           <p>Nothing added yet. Add each thing you tried, one at a time, in any order.</p>
@@ -638,7 +650,8 @@ export function ReproScreen({
     <section>
       <ProgressLine session={session} id={question.id} />
       <Heading level={2}>{question.prompt}</Heading>
-      <AnswerField id="q-repro" label="Your answer" value={session.repro.text} onChange={(text) => onChange({ text })} hints={question.hints} primary rows={4} onPendingChange={onPending} />
+      <QuestionHints hints={question.hints} />
+      <AnswerField id="q-repro" label="Your answer" value={session.repro.text} onChange={(text) => onChange({ text })} primary rows={4} onPendingChange={onPending} />
       <AnswerField
         id="repro-commands"
         label="Commands: paste them, do not say them"
@@ -648,6 +661,7 @@ export function ReproScreen({
         rows={4}
         note="Speech is poor for commands and links, so these are typed or pasted."
         recordLabel="Say it instead"
+        allowUpload={false}
         onPendingChange={onPending}
       />
       <div className="field field--narrow">

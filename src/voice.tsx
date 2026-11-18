@@ -14,7 +14,7 @@ interface Job {
 // The recording stays in memory only until it has become text, then it is dropped.
 export function useVoiceCapture(id: string, onText: (text: string) => void) {
   const { transcribe, recordingOwner, setRecordingOwner } = useTranscription();
-  const [phase, setPhase] = useState<"idle" | "recording">("idle");
+  const [phase, setPhase] = useState<"idle" | "starting" | "recording">("idle");
   const [seconds, setSeconds] = useState(0);
   const [error, setError] = useState<string | null>(null);
   const [jobs, setJobs] = useState<Job[]>([]);
@@ -23,6 +23,8 @@ export function useVoiceCapture(id: string, onText: (text: string) => void) {
   const stream = useRef<MediaStream | null>(null);
   const chunks = useRef<Blob[]>([]);
   const timer = useRef<number | undefined>(undefined);
+  const startRequest = useRef(0);
+  const startPending = useRef(false);
   const onTextRef = useRef(onText);
   onTextRef.current = onText;
 
@@ -52,17 +54,29 @@ export function useVoiceCapture(id: string, onText: (text: string) => void) {
     if (recorder.current && recorder.current.state !== "inactive") recorder.current.stop();
     releaseStream();
     setRecordingOwner(null);
+    startPending.current = false;
     setPhase("idle");
   }, [releaseStream, setRecordingOwner]);
 
   const start = useCallback(async () => {
+    if (startPending.current || phase !== "idle" || (recordingOwner !== null && recordingOwner !== id)) return;
+    startPending.current = true;
+    const requestId = ++startRequest.current;
     setError(null);
+    setPhase("starting");
     if (!navigator.mediaDevices?.getUserMedia || typeof MediaRecorder === "undefined") {
+      startPending.current = false;
+      setPhase("idle");
       setError("This browser cannot record. You can type your answer instead.");
       return;
     }
     try {
       const media = await navigator.mediaDevices.getUserMedia({ audio: true });
+      if (requestId !== startRequest.current) {
+        media.getTracks().forEach((track) => track.stop());
+        return;
+      }
+      startPending.current = false;
       stream.current = media;
       chunks.current = [];
       const rec = new MediaRecorder(media);
@@ -90,7 +104,10 @@ export function useVoiceCapture(id: string, onText: (text: string) => void) {
         if (elapsed >= LIMIT_SECONDS) stop();
       }, 1000);
     } catch (e) {
+      if (requestId !== startRequest.current) return;
+      startPending.current = false;
       releaseStream();
+      setPhase("idle");
       const name = (e as DOMException)?.name;
       setError(
         name === "NotFoundError"
@@ -98,10 +115,27 @@ export function useVoiceCapture(id: string, onText: (text: string) => void) {
           : "The microphone is blocked. Click the icon in the address bar, allow the microphone, then try again. You can also type your answer.",
       );
     }
-  }, [id, releaseStream, runJob, setRecordingOwner, stop]);
+  }, [id, phase, recordingOwner, releaseStream, runJob, setRecordingOwner, stop]);
+
+  const upload = useCallback(
+    (file: File) => {
+      setError(null);
+      if (file.size === 0) {
+        setError("That audio file is empty. Choose another file or type your answer.");
+        return;
+      }
+      const jobId = newId();
+      blobs.current.set(jobId, file);
+      setJobs((all) => [...all, { id: jobId, status: "working" }]);
+      runJob(jobId);
+    },
+    [runJob],
+  );
 
   useEffect(
     () => () => {
+      startRequest.current += 1;
+      startPending.current = false;
       if (recorder.current && recorder.current.state !== "inactive") {
         recorder.current.onstop = null;
         recorder.current.stop();
@@ -119,6 +153,7 @@ export function useVoiceCapture(id: string, onText: (text: string) => void) {
     jobs,
     start,
     stop,
+    upload,
     retry: runJob,
     discard: (jobId: string) => {
       blobs.current.delete(jobId);
@@ -149,6 +184,10 @@ export function RecordControls({
         >
           {label}
         </button>
+      ) : phase === "starting" ? (
+        <p className="record__starting" role="status">
+          Starting recording… Allow microphone access if your browser asks.
+        </p>
       ) : (
         <div className="record__live">
           <button type="button" className="btn btn--stop" onClick={stop}>
@@ -174,7 +213,7 @@ export function RecordControls({
         ) : (
           <div key={job.id} className="callout callout--error" role="alert">
             <p>
-              We couldn't turn this into text. Your recording is kept until it is text. Try again, or type your answer.
+              We couldn't turn this audio into text. It stays in this browser until it is transcribed or you discard it.
             </p>
             <div className="row">
               <button type="button" className="btn btn--small" onClick={() => retry(job.id)}>
@@ -196,31 +235,32 @@ export function AnswerField({
   label,
   value,
   onChange,
-  hints,
   primary = false,
   mono = false,
   rows = 5,
   note,
   onPendingChange,
   recordLabel,
+  allowUpload = true,
 }: {
   id: string;
   label: string;
   value: string;
   onChange: (value: string) => void;
-  hints?: string[];
   primary?: boolean;
   mono?: boolean;
   rows?: number;
   note?: string;
   onPendingChange?: (id: string, pending: number) => void;
   recordLabel?: string;
+  allowUpload?: boolean;
 }) {
   const areaId = useId();
+  const fileInputId = useId();
   const valueRef = useRef(value);
   valueRef.current = value;
   const capture = useVoiceCapture(id, (text) => onChange(appendText(valueRef.current, text)));
-  const pending = capture.jobs.length + (capture.phase === "recording" ? 1 : 0);
+  const pending = capture.jobs.length + (capture.phase !== "idle" ? 1 : 0);
   useEffect(() => {
     onPendingChange?.(id, pending);
   }, [id, pending, onPendingChange]);
@@ -231,27 +271,39 @@ export function AnswerField({
       <label className="field__label" htmlFor={areaId}>
         {label}
       </label>
-      {hints && hints.length > 0 && (
-        <details className="hints">
-          <summary>Need a prompt?</summary>
-          <ul>
-            {hints.map((h) => (
-              <li key={h}>{h}</li>
-            ))}
-          </ul>
-        </details>
-      )}
+      <div className="capture-options">
+        <RecordControls
+          capture={capture}
+          primary={primary}
+          label={recordLabel ?? (primary ? "Record answer" : "Start recording")}
+        />
+        {allowUpload && capture.phase === "idle" && (
+          <label className="btn upload-button" htmlFor={fileInputId}>
+            Upload audio
+            <input
+              id={fileInputId}
+              type="file"
+              accept="audio/*,.mp3,.m4a,.wav,.webm,.ogg"
+              onChange={(event) => {
+                const file = event.currentTarget.files?.[0];
+                if (file) capture.upload(file);
+                event.currentTarget.value = "";
+              }}
+            />
+          </label>
+        )}
+        <span className="capture-options__note">or type below</span>
+      </div>
       <textarea
         id={areaId}
         className={mono ? "input input--mono" : "input"}
         rows={rows}
         value={value}
         onChange={(event) => onChange(event.target.value)}
-        placeholder="Type here, or press Start recording."
+        placeholder="Type your answer here. It saves as you type."
         spellCheck={!mono}
       />
       {note && <p className="field__note">{note}</p>}
-      <RecordControls capture={capture} primary={primary} label={recordLabel} />
     </div>
   );
 }

@@ -65,16 +65,22 @@ export function TranscriptionProvider({ children }: { children: ReactNode }) {
     ready.current = run;
     run.catch(() => setModel({ state: "failed", percent: 0 }));
   }, []);
+  const startRef = useRef(start);
+  startRef.current = start;
 
   useEffect(() => {
     if (!started.current) start();
   }, [start]);
 
   const transcribe = useCallback(async (blob: Blob) => {
-    if (!ready.current) throw new Error("The speech model has not started.");
-    await ready.current; // recording works while the model loads; text appears once it is ready
+    if (!ready.current) startRef.current();
+    const preparation = ready.current;
+    if (!preparation) throw new Error("The speech model has not started.");
+    await preparation; // recording works while the model loads; text appears once it is ready
     const audio = await decodeTo16k(blob);
-    const result = await transcriber.current!.transcribe(audio);
+    const activeTranscriber = transcriber.current;
+    if (!activeTranscriber) throw new Error("The speech model is not ready.");
+    const result = await activeTranscriber.transcribe(audio);
     return result.text;
   }, []);
 
