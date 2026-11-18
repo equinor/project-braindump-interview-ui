@@ -3,6 +3,7 @@ dist/
 public/models/*.onnx
 public/models/*.txt
 public/models/*.part
+public/models/model-manifest.json
 public/vendor/ort/
 playwright-report/
 test-results/
