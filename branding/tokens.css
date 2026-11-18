@@ -1,0 +1,77 @@
+/*
+  Equinor tokens for the interview app.
+  Colours are the official swatches from the Equinor brand files (EQ-CP-2024).
+  Roles and sizes are working rules, not official statements. Check anything external against the Equinor Communication Toolbox.
+*/
+:root {
+  /* core */
+  --eq-energy: #FF1243;      /* the single accent. Never body text, never a large fill. */
+  --eq-white: #FFFFFF;
+  --eq-ns-1: #243746;        /* North Sea 1: text, dark buttons */
+
+  /* North Sea ramp (blues) */
+  --eq-ns-2: #234057;
+  --eq-ns-3: #2A4D74;
+  --eq-ns-4: #49709C;        /* 5.2:1 on white: secondary text */
+  --eq-ns-5: #7294BB;
+  --eq-ns-6: #A8C3DB;        /* thin lines */
+  --eq-ns-7: #C2DAEB;        /* thin lines, quiet fills */
+  --eq-ns-8: #D6EBF6;
+  --eq-ns-9: #DFF5FF;        /* light panels */
+
+  /* Norwegian woods (greens): positive and ready states */
+  --eq-nw-1: #007079;        /* 5.8:1 on white */
+  --eq-nw-9: #E6FAEC;
+
+  /* Sand and summer (reds): errors and cautions */
+  --eq-2s-1: #7D0023;        /* 11.1:1 on white: error text */
+  --eq-2s-9: #FFE7D6;        /* warm panel for cautions */
+
+  /* semantic roles */
+  --color-bg: var(--eq-white);
+  --color-text: var(--eq-ns-1);
+  --color-text-secondary: var(--eq-ns-4);
+  --color-panel: var(--eq-ns-9);
+  --color-rule: var(--eq-ns-7);
+  --color-primary: var(--eq-ns-1);          /* main buttons: white text on North Sea 1 */
+  --color-primary-text: var(--eq-white);
+  --color-accent: var(--eq-energy);         /* one element per view */
+  --color-ok: var(--eq-nw-1);
+  --color-ok-panel: var(--eq-nw-9);
+  --color-error: var(--eq-2s-1);
+  --color-error-panel: var(--eq-2s-9);
+  --color-focus: var(--eq-nw-1);            /* focus ring: 3px, offset 2px */
+
+  /* type: install the Equinor font files if you have them, otherwise Arial */
+  --font: "Equinor", Arial, Helvetica, sans-serif;
+  --text-caption: 0.875rem;   /* 14px */
+  --text-body: 1.0625rem;     /* 17px */
+  --text-label: 1rem;         /* 16px, Medium */
+  --text-h3: 1.25rem;         /* 20px */
+  --text-h2: 1.75rem;         /* 28px */
+  --text-h1: 2.25rem;         /* 36px */
+  --leading-body: 1.5;
+  --leading-heading: 1.2;
+
+  /* spacing scale */
+  --space-1: 4px;  --space-2: 8px;  --space-3: 16px;  --space-4: 24px;
+  --space-5: 32px; --space-6: 48px; --space-7: 64px;
+
+  /* shape */
+  --radius: 6px;
+  --rule: 1px solid var(--color-rule);
+  --target-min: 44px;         /* minimum height and width of anything clickable */
+}
+
+/*
+  Add these @font-face rules only if the Equinor font files are available to you through Equinor.
+  Do not commit the font files to a public repository or send them outside the engagement.
+
+  @font-face { font-family: "Equinor"; font-weight: 400; font-style: normal; src: url("fonts/Equinor-Regular.otf") format("opentype"); }
+  @font-face { font-family: "Equinor"; font-weight: 500; font-style: normal; src: url("fonts/Equinor-Medium.otf")  format("opentype"); }
+  @font-face { font-family: "Equinor"; font-weight: 700; font-style: normal; src: url("fonts/Equinor-Bold.otf")    format("opentype"); }
+*/
+
+body { font-family: var(--font); font-size: var(--text-body); line-height: var(--leading-body); color: var(--color-text); background: var(--color-bg); }
+h1, h2, h3 { font-weight: 500; line-height: var(--leading-heading); }
+:focus-visible { outline: 3px solid var(--color-focus); outline-offset: 2px; }

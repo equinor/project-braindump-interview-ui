@@ -1,0 +1,9 @@
+node_modules/
+dist/
+public/models/*.onnx
+public/models/*.txt
+public/models/*.part
+public/vendor/ort/
+playwright-report/
+test-results/
+*.tsbuildinfo

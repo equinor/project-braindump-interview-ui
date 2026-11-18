@@ -1,0 +1,862 @@
+{
+  "version": 1,
+  "title": "Project exit interview",
+  "subtitle": "Capture what was done, and why",
+  "projectTypes": [
+    {
+      "id": "anomaly-detection",
+      "label": "Anomaly detection"
+    },
+    {
+      "id": "forecasting",
+      "label": "Forecasting"
+    },
+    {
+      "id": "schedule-optimisation",
+      "label": "Schedule optimisation"
+    },
+    {
+      "id": "classification",
+      "label": "Classification"
+    },
+    {
+      "id": "visual-classification",
+      "label": "Visual classification (images or video)"
+    },
+    {
+      "id": "other",
+      "label": "Other data science"
+    },
+    {
+      "id": "none",
+      "label": "None of these",
+      "exclusive": true
+    }
+  ],
+  "reasons": [
+    {
+      "id": "ending",
+      "label": "The project is ending"
+    },
+    {
+      "id": "paused",
+      "label": "The project is paused"
+    },
+    {
+      "id": "handover",
+      "label": "The project is changing hands"
+    },
+    {
+      "id": "leaving",
+      "label": "I am leaving the project"
+    }
+  ],
+  "marks": [
+    {
+      "id": "first-hand",
+      "label": "I did or saw it"
+    },
+    {
+      "id": "heard",
+      "label": "I was told it"
+    },
+    {
+      "id": "unsure",
+      "label": "Not sure"
+    }
+  ],
+  "limits": {
+    "maxAnswerSeconds": 300,
+    "warnAtSeconds": 270
+  },
+  "minutesPerQuestion": {
+    "full": 2.7,
+    "short": 2.0
+  },
+  "sequence": [
+    "X1",
+    "X2",
+    "X3",
+    "X4",
+    "X5",
+    "X6",
+    "@data",
+    "X8",
+    "X9",
+    "X10",
+    "X11",
+    "X12",
+    "X13"
+  ],
+  "sequenceRules": "@data expands to X7 when the project type is \"none of these\" or nothing is picked. Otherwise it expands to every question of the data-science module, then every question of the module for each picked type, in the order the types were picked. In the short route, keep only questions with essential=true.",
+  "core": [
+    {
+      "id": "X1",
+      "text": "Tell the story of the project in a couple of minutes.",
+      "essential": true,
+      "hint": "Why it started, what you did, and where it ended up.",
+      "prompts": [
+        "What was the situation at the start?",
+        "What did you set out to do?",
+        "What did you actually end up doing?",
+        "Where did it end up?"
+      ],
+      "note": "Don't interrupt this answer. The later questions fill in the detail.",
+      "part": "The story"
+    },
+    {
+      "id": "X2",
+      "text": "What was the need, and why did this project exist?",
+      "essential": true,
+      "hint": null,
+      "prompts": [
+        "Who needed something, and what was the problem?",
+        "What did success look like?",
+        "Why this, and why then? What else could the time have gone on?",
+        "What did people do about it before, and what was wrong with that?"
+      ],
+      "note": null,
+      "part": "Why it existed"
+    },
+    {
+      "id": "X3",
+      "text": "What did you do, in order?",
+      "essential": true,
+      "hint": null,
+      "prompts": [
+        "What was the first thing you did, and what came next?",
+        "Roughly when was each step?",
+        "Did the plan change along the way? Why?",
+        "Who was involved, by role?"
+      ],
+      "note": null,
+      "part": "What was done"
+    },
+    {
+      "id": "X4",
+      "text": "What came out of it?",
+      "essential": true,
+      "hint": null,
+      "prompts": [
+        "What works, and how well? Give numbers if you can.",
+        "Compared with what: a baseline, the way it was done before?",
+        "On which data, and which version of it?",
+        "What are you most and least confident about in the results?"
+      ],
+      "note": null,
+      "part": "What was done"
+    },
+    {
+      "id": "X5",
+      "text": "What didn't work, and why did you stop?",
+      "essential": false,
+      "hint": null,
+      "prompts": [
+        "What did you try that failed or went nowhere?",
+        "Was it the idea, the data, the tools, the time, or a decision?",
+        "What would you not try again? What would you try again with more time?"
+      ],
+      "note": "People skip this question most often, and it saves the next person the most time.",
+      "part": "What was done"
+    },
+    {
+      "id": "X6",
+      "text": "What were the main decisions, and why were they made?",
+      "essential": true,
+      "hint": null,
+      "prompts": [
+        "For each: what was decided, and what were the alternatives?",
+        "Why this one? What was it about the situation that made it right?",
+        "Who decided, by role? When?",
+        "Does it still hold, or would you decide differently now?"
+      ],
+      "note": null,
+      "part": "Decisions and data"
+    },
+    {
+      "id": "X7",
+      "text": "What data did you use, and why those sources?",
+      "essential": true,
+      "hint": null,
+      "prompts": [
+        "What was available, and what did you leave out? Why?",
+        "Who owns each source, and how did you get access?",
+        "What was wrong with the data, and what did you do about it?"
+      ],
+      "note": "For a data science project, the data science module goes deeper on this. If you use the module, use its data questions instead of this one.",
+      "part": "Decisions and data"
+    },
+    {
+      "id": "X8",
+      "text": "What state is it in now, and why is it ending or changing hands?",
+      "essential": true,
+      "hint": null,
+      "prompts": [
+        "Is it an idea, a prototype, tested on real data, or in use? Does it work today?",
+        "Who uses it, and what do they use it for?",
+        "Why is the work ending or moving on, in terms of the work: goal reached, priorities changed, blocked on something?"
+      ],
+      "note": null,
+      "part": "Where it stands"
+    },
+    {
+      "id": "X9",
+      "text": "What is still open or unfinished?",
+      "essential": false,
+      "hint": null,
+      "prompts": [
+        "What questions are unanswered?",
+        "What would you do next, and in what order?",
+        "What is blocking it, if anything?"
+      ],
+      "note": null,
+      "part": "Where it stands"
+    },
+    {
+      "id": "X10",
+      "text": "Where is everything, and how do I run it?",
+      "essential": true,
+      "hint": null,
+      "prompts": [
+        "Where are the code, notebooks, data, models and results?",
+        "Can someone rerun it? What do they need: access, an environment, compute, particular versions?",
+        "What breaks first?",
+        "Is anything missing, or only on someone's own laptop?"
+      ],
+      "note": null,
+      "part": "Handing over"
+    },
+    {
+      "id": "X11",
+      "text": "What context would someone not find in the code?",
+      "essential": false,
+      "hint": null,
+      "prompts": [
+        "What domain knowledge does it rely on?",
+        "What constraints shaped it?",
+        "Which other systems or teams does it depend on?",
+        "Which terms would a newcomer not know?",
+        "Who knows more, by role?"
+      ],
+      "note": null,
+      "part": "Handing over"
+    },
+    {
+      "id": "X12",
+      "text": "If you handed this over in 30 minutes, what would you say?",
+      "essential": true,
+      "hint": null,
+      "prompts": [
+        "What should they read or look at first? What can they ignore?",
+        "What will trip them up?",
+        "What would you tell them about this that nobody has written down?"
+      ],
+      "note": null,
+      "part": "Handing over"
+    },
+    {
+      "id": "X13",
+      "text": "Anything I should have asked?",
+      "essential": false,
+      "hint": null,
+      "prompts": [],
+      "note": null,
+      "part": "Handing over"
+    }
+  ],
+  "modules": [
+    {
+      "id": "data-science",
+      "title": "About the data science work",
+      "appliesTo": [
+        "anomaly-detection",
+        "forecasting",
+        "schedule-optimisation",
+        "classification",
+        "visual-classification",
+        "other"
+      ],
+      "questions": [
+        {
+          "id": "DS1",
+          "text": "What data sources did you use, and why did you choose them?",
+          "essential": true,
+          "hint": null,
+          "prompts": [
+            "What was available, and what did you consider but leave out? Why?",
+            "Who owns each source, and how did you get access?",
+            "Which period, how much data, how often sampled? (Sensor tags, tables, files.)",
+            "Was the choice yours, the business's, or simply what you could get?",
+            "Is any of it hard to get again, or going to change?"
+          ],
+          "note": null,
+          "part": "About the data science work"
+        },
+        {
+          "id": "DS2",
+          "text": "What was wrong with the data, and what did you do about it?",
+          "essential": true,
+          "hint": null,
+          "prompts": [
+            "Gaps, wrong units, drift, faulty sensors, duplicates, missing labels?",
+            "Was context missing, such as design information, operating mode or maintenance records?",
+            "Did changes to sensors or assets reach you late, or not at all?",
+            "How did you handle each problem, and who could fix it at the source?"
+          ],
+          "note": null,
+          "part": "About the data science work"
+        },
+        {
+          "id": "DS3",
+          "text": "How did you prepare the data?",
+          "essential": false,
+          "hint": null,
+          "prompts": [
+            "Cleaning, aggregating, filling gaps, building features.",
+            "What assumptions are built into those steps?",
+            "Could someone reuse the preparation code on a new project?"
+          ],
+          "note": null,
+          "part": "About the data science work"
+        },
+        {
+          "id": "DS4",
+          "text": "How did you judge whether it worked?",
+          "essential": true,
+          "hint": null,
+          "prompts": [
+            "Which measure did you use, and who agreed it was the right one?",
+            "What was the baseline: the current method, or something simple?",
+            "How did you validate: on which data, and was it separate from what you built on?",
+            "What was the result in numbers, and what would have counted as good enough?"
+          ],
+          "note": null,
+          "part": "About the data science work"
+        },
+        {
+          "id": "DS5",
+          "text": "What domain knowledge did you need, and who gave it to you?",
+          "essential": false,
+          "hint": null,
+          "prompts": [
+            "Which engineers or experts shaped the approach?",
+            "Was there something they told you that changed what you did?",
+            "What would you ask them earlier next time?"
+          ],
+          "note": null,
+          "part": "About the data science work"
+        },
+        {
+          "id": "DS6",
+          "text": "How close is it to being used for real?",
+          "essential": true,
+          "hint": null,
+          "prompts": [
+            "Where is it: an idea, a prototype, tested on real data, or in use?",
+            "Who would use it, and what decision would it help with?",
+            "What would have to be true to run it every day: live data, an owner, support, approvals?"
+          ],
+          "note": null,
+          "part": "About the data science work"
+        },
+        {
+          "id": "DS7",
+          "text": "Could someone else rerun it?",
+          "essential": false,
+          "hint": null,
+          "prompts": [
+            "What do they need: data access, an environment, compute, specific versions?",
+            "Where are the notebooks, pipelines and results?",
+            "What breaks first?"
+          ],
+          "note": null,
+          "part": "About the data science work"
+        }
+      ]
+    },
+    {
+      "id": "anomaly-detection",
+      "title": "About anomaly detection",
+      "appliesTo": [
+        "anomaly-detection"
+      ],
+      "questions": [
+        {
+          "id": "AD1",
+          "text": "What counts as an anomaly here, and who decided?",
+          "essential": true,
+          "hint": null,
+          "prompts": [
+            "What does a real event look like: an equipment fault, a process upset, a sensor fault?",
+            "Is a bad sensor an anomaly, or a data problem?",
+            "What should happen when one is found?"
+          ],
+          "note": null,
+          "part": "About anomaly detection"
+        },
+        {
+          "id": "AD2",
+          "text": "What labelled examples did you have, and did you check against past events?",
+          "essential": false,
+          "hint": null,
+          "prompts": [
+            "How many examples, from where (incident logs, maintenance records, engineers' judgement)?",
+            "How reliable are the labels? Were real events left unlabelled?",
+            "Did you test the method on known past incidents? What did it catch, miss, or give early warning of?"
+          ],
+          "note": null,
+          "part": "About anomaly detection"
+        },
+        {
+          "id": "AD3",
+          "text": "What approaches did you try, and how did they compare?",
+          "essential": false,
+          "hint": null,
+          "prompts": [
+            "Fixed limits or rules, statistical methods, machine learning, learning from normal data only?",
+            "Why did you keep or drop each?"
+          ],
+          "note": null,
+          "part": "About anomaly detection"
+        },
+        {
+          "id": "AD4",
+          "text": "How did you deal with false alarms and missed events?",
+          "essential": true,
+          "hint": null,
+          "prompts": [
+            "What false alarm rate could users tolerate?",
+            "What trade-off did you choose, and who agreed it?",
+            "How did engineers or operators react to the alerts?"
+          ],
+          "note": null,
+          "part": "About anomaly detection"
+        },
+        {
+          "id": "AD5",
+          "text": "How did you tell bad data from a real anomaly?",
+          "essential": false,
+          "hint": null,
+          "prompts": [
+            "Frozen values, gaps, spikes, interpolation?",
+            "Where in the pipeline is that decided?"
+          ],
+          "note": null,
+          "part": "About anomaly detection"
+        },
+        {
+          "id": "AD6",
+          "text": "How did you handle changes in what is normal?",
+          "essential": false,
+          "hint": null,
+          "prompts": [
+            "Operating modes, seasons, maintenance, equipment changes, drift?",
+            "How often does it need retraining or resetting?"
+          ],
+          "note": null,
+          "part": "About anomaly detection"
+        }
+      ]
+    },
+    {
+      "id": "forecasting",
+      "title": "About forecasting",
+      "appliesTo": [
+        "forecasting"
+      ],
+      "questions": [
+        {
+          "id": "FC1",
+          "text": "What was forecast, and what decision does it feed?",
+          "essential": true,
+          "hint": null,
+          "prompts": [
+            "Which quantity, how far ahead (the horizon), and how often (the time resolution)?",
+            "Who uses the forecast, and for what?"
+          ],
+          "note": null,
+          "part": "About forecasting"
+        },
+        {
+          "id": "FC2",
+          "text": "What was the baseline, and how did the model compare?",
+          "essential": true,
+          "hint": null,
+          "prompts": [
+            "A naive or seasonal forecast, or the forecast already in use?",
+            "By how much did you beat it, or fail to, and on which measure?"
+          ],
+          "note": null,
+          "part": "About forecasting"
+        },
+        {
+          "id": "FC3",
+          "text": "What drives the series?",
+          "essential": false,
+          "hint": null,
+          "prompts": [
+            "Seasonality, trends, outside drivers such as weather, plans, prices or operating conditions?",
+            "Which extra data did you add, and why?"
+          ],
+          "note": null,
+          "part": "About forecasting"
+        },
+        {
+          "id": "FC4",
+          "text": "How did you validate?",
+          "essential": false,
+          "hint": null,
+          "prompts": [
+            "Backtests that respect time order? Which horizons did you test?",
+            "How far back did you train, and how often would it be retrained?"
+          ],
+          "note": null,
+          "part": "About forecasting"
+        },
+        {
+          "id": "FC5",
+          "text": "Where does it fail?",
+          "essential": false,
+          "hint": null,
+          "prompts": [
+            "Regime changes, outliers, gaps, extreme values, long horizons?",
+            "Do users need a range, not just one number?"
+          ],
+          "note": null,
+          "part": "About forecasting"
+        },
+        {
+          "id": "FC6",
+          "text": "How many series, and how did you handle scale?",
+          "essential": false,
+          "hint": null,
+          "prompts": [
+            "One model per series or a shared one?",
+            "What about a new series with no history?"
+          ],
+          "note": null,
+          "part": "About forecasting"
+        }
+      ]
+    },
+    {
+      "id": "schedule-optimisation",
+      "title": "About schedule optimisation",
+      "appliesTo": [
+        "schedule-optimisation"
+      ],
+      "questions": [
+        {
+          "id": "SO1",
+          "text": "What is being scheduled, and what makes a schedule good?",
+          "essential": true,
+          "hint": null,
+          "prompts": [
+            "What is the objective: cost, delay, utilisation, risk, safety?",
+            "Who agreed it? Do the aims conflict?"
+          ],
+          "note": null,
+          "part": "About schedule optimisation"
+        },
+        {
+          "id": "SO2",
+          "text": "Which constraints did you include, and which did you leave out?",
+          "essential": true,
+          "hint": null,
+          "prompts": [
+            "Resources, order of tasks, availability, time windows, rules and regulations?",
+            "Why were some left out?"
+          ],
+          "note": null,
+          "part": "About schedule optimisation"
+        },
+        {
+          "id": "SO3",
+          "text": "Where did the inputs come from, and how reliable are they?",
+          "essential": false,
+          "hint": null,
+          "prompts": [
+            "Durations, availability, demand.",
+            "How far apart are estimates and actuals?"
+          ],
+          "note": null,
+          "part": "About schedule optimisation"
+        },
+        {
+          "id": "SO4",
+          "text": "What approach did you use, and why?",
+          "essential": false,
+          "hint": null,
+          "prompts": [
+            "Rules of thumb, mathematical optimisation with a solver, search heuristics, simulation, machine learning?",
+            "How large a problem could it handle, and how long did it take to run?"
+          ],
+          "note": null,
+          "part": "About schedule optimisation"
+        },
+        {
+          "id": "SO5",
+          "text": "How did it compare with how scheduling is done today?",
+          "essential": true,
+          "hint": null,
+          "prompts": [
+            "A manual plan, or an existing tool?",
+            "How did you measure the difference, for example by replaying past periods?",
+            "What can it not do yet?"
+          ],
+          "note": null,
+          "part": "About schedule optimisation"
+        },
+        {
+          "id": "SO6",
+          "text": "What do the schedulers know that the model doesn't?",
+          "essential": false,
+          "hint": null,
+          "prompts": [
+            "Unwritten rules and exceptions.",
+            "How do they handle disruptions and re-planning?",
+            "Did they trust the output?"
+          ],
+          "note": null,
+          "part": "About schedule optimisation"
+        }
+      ]
+    },
+    {
+      "id": "classification",
+      "title": "About classification",
+      "appliesTo": [
+        "classification"
+      ],
+      "questions": [
+        {
+          "id": "CL1",
+          "text": "What are the classes, who defined them, and how clear are the boundaries?",
+          "essential": true,
+          "hint": null,
+          "prompts": [
+            "Could two experts disagree about which class something belongs to?"
+          ],
+          "note": null,
+          "part": "About classification"
+        },
+        {
+          "id": "CL2",
+          "text": "Where did the labels come from?",
+          "essential": false,
+          "hint": null,
+          "prompts": [
+            "How many per class, who labelled them, how reliable?",
+            "Is one class much rarer than the others?"
+          ],
+          "note": null,
+          "part": "About classification"
+        },
+        {
+          "id": "CL3",
+          "text": "Which inputs mattered, and which methods did you try?",
+          "essential": false,
+          "hint": null,
+          "prompts": [
+            "Why did you keep or drop each?"
+          ],
+          "note": null,
+          "part": "About classification"
+        },
+        {
+          "id": "CL4",
+          "text": "How did you measure it, and which mistakes matter most?",
+          "essential": true,
+          "hint": null,
+          "prompts": [
+            "Missing a case or flagging a wrong one: which costs more?",
+            "Which classes get confused?",
+            "How does it compare with the baseline or with a person doing the same job?"
+          ],
+          "note": null,
+          "part": "About classification"
+        },
+        {
+          "id": "CL5",
+          "text": "How did you check it works on new data?",
+          "essential": false,
+          "hint": null,
+          "prompts": [
+            "Did you split by time, by asset or by site?",
+            "Any risk that information leaked from the answer into the inputs?",
+            "Have you seen drift?"
+          ],
+          "note": null,
+          "part": "About classification"
+        },
+        {
+          "id": "CL6",
+          "text": "What happens when it is unsure or wrong?",
+          "essential": false,
+          "hint": null,
+          "prompts": [
+            "Is there a confidence threshold or a human check?",
+            "What does a wrong call cost?"
+          ],
+          "note": null,
+          "part": "About classification"
+        }
+      ]
+    },
+    {
+      "id": "visual-classification",
+      "title": "About visual classification",
+      "appliesTo": [
+        "visual-classification"
+      ],
+      "questions": [
+        {
+          "id": "VC1",
+          "text": "What is being recognised, and what do the images look like?",
+          "essential": true,
+          "hint": null,
+          "prompts": [
+            "Which classes, who defined them, and how clear are the boundaries?",
+            "Where do the images come from: which cameras or sources, what resolution, what angles and lighting?",
+            "Is it single images or video?"
+          ],
+          "note": null,
+          "part": "About visual classification"
+        },
+        {
+          "id": "VC2",
+          "text": "Where did the images and labels come from?",
+          "essential": false,
+          "hint": null,
+          "prompts": [
+            "How many images, and how many per class? Are some classes rare?",
+            "Who labelled them, with what instructions, and how often did labellers disagree?",
+            "How were hard or ambiguous cases handled?"
+          ],
+          "note": null,
+          "part": "About visual classification"
+        },
+        {
+          "id": "VC3",
+          "text": "What approach did you use, and why?",
+          "essential": false,
+          "hint": null,
+          "prompts": [
+            "A ready-made model used as it is, a pretrained model adapted to your images, or one trained from scratch?",
+            "Anything you did to make the images more varied or the data cleaner?",
+            "Why did you keep or drop each option?"
+          ],
+          "note": null,
+          "part": "About visual classification"
+        },
+        {
+          "id": "VC4",
+          "text": "How did you measure it, and which mistakes matter most?",
+          "essential": true,
+          "hint": null,
+          "prompts": [
+            "Missing a case or flagging a wrong one: which costs more?",
+            "Which classes get confused, and why do you think so?",
+            "How does it compare with a person doing the same job?"
+          ],
+          "note": null,
+          "part": "About visual classification"
+        },
+        {
+          "id": "VC5",
+          "text": "How did you check it on new conditions?",
+          "essential": true,
+          "hint": null,
+          "prompts": [
+            "Different cameras, sites, lighting, weather or time of day?",
+            "Did frames from the same video end up on both sides of the split, making results look better than they are?",
+            "What happened when conditions changed?"
+          ],
+          "note": null,
+          "part": "About visual classification"
+        },
+        {
+          "id": "VC6",
+          "text": "What happens when it is unsure or wrong?",
+          "essential": false,
+          "hint": null,
+          "prompts": [
+            "Is there a confidence threshold or a human check?",
+            "What does a wrong call cost?"
+          ],
+          "note": null,
+          "part": "About visual classification"
+        },
+        {
+          "id": "VC7",
+          "text": "Where would it run, and how fast must it be?",
+          "essential": false,
+          "hint": null,
+          "prompts": [
+            "On a camera or device, on a nearby computer, or in the cloud?",
+            "How many images a second, and how quickly must the answer arrive?",
+            "Who looks at the results, and what happens to the stored images?"
+          ],
+          "note": null,
+          "part": "About visual classification"
+        }
+      ]
+    },
+    {
+      "id": "other",
+      "title": "About this kind of problem",
+      "appliesTo": [
+        "other"
+      ],
+      "questions": [
+        {
+          "id": "OT1",
+          "text": "How would you describe the problem in one sentence to someone outside the team?",
+          "essential": true,
+          "hint": null,
+          "prompts": [],
+          "note": null,
+          "part": "About this kind of problem"
+        },
+        {
+          "id": "OT2",
+          "text": "What kind of method did you use, and why that one?",
+          "essential": false,
+          "hint": null,
+          "prompts": [],
+          "note": null,
+          "part": "About this kind of problem"
+        },
+        {
+          "id": "OT3",
+          "text": "What did you compare it against?",
+          "essential": false,
+          "hint": null,
+          "prompts": [
+            "A baseline, or current practice."
+          ],
+          "note": null,
+          "part": "About this kind of problem"
+        },
+        {
+          "id": "OT4",
+          "text": "What did you measure, and what was the result?",
+          "essential": false,
+          "hint": null,
+          "prompts": [],
+          "note": null,
+          "part": "About this kind of problem"
+        },
+        {
+          "id": "OT5",
+          "text": "What would you tell someone choosing a method for a similar problem?",
+          "essential": false,
+          "hint": null,
+          "prompts": [],
+          "note": null,
+          "part": "About this kind of problem"
+        }
+      ]
+    }
+  ]
+}
