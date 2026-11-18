@@ -1,11 +1,11 @@
-# Spike F: braindump
+# Project Braindump
 
 A single-page app for a quick project braindump that ends in one markdown file, in Equinor branding.
 The person answers fixed questions by typing, recording, or uploading audio, fixes the text, and saves a `.md` file that follows
 the documentation template (header fields plus eleven sections). They then edit and publish it themselves.
 
-Design source: the Miro board "Spike E wireframes, Spike F braindump" (spike E was the wireframes, this is the build),
-frames 1 to 9 (workflow) and R1 to R3. The plain-text wireframes are in `../spike-e-audio-interview/`.
+Design source: the Project Braindump Miro board, workflow frames 1 to 9 and reference frames R1 to R3.
+The plain-text wireframes are in `../spike-e-audio-interview/`.
 
 ## Run
 
