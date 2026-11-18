@@ -1,0 +1,190 @@
+{
+  "_help": [
+    "Edit this file to change the questions. No code change or rebuild is needed: save the file and refresh the page.",
+    "questions: the questions in the order they are asked.",
+    "stages: optional. Each has an id, a title and a 'why' line. A question with a matching 'stage' shows 'Stage 1: Frame it' and 'Why we ask: ...' above its first question.",
+    "  id: a short unique name (letters, digits, - and _). Saved answers are filed under it, so avoid renaming it mid-project.",
+    "  heading: the section title written in the markdown file.",
+    "  prompt: the question people are asked.",
+    "  hints: optional list of short prompts shown under 'Need a prompt?'. Any number, including none.",
+    "  short: true if the short route asks it.",
+    "  stage: optional id of a stage listed under 'stages'.",
+    "  startingPoints: optional. A list of text shown as buttons that start the answer, or the word 'about' to offer the title and topic typed on the About screen. People can always describe their own.",
+    "  maxSentences: optional. Shows a counter such as '2 of 3 sentences' under the answer box. It only counts; it never blocks.",
+    "  kind: optional. 'text' (default) is a normal answer. 'approaches' is the list of things tried, with idea, why it worked or failed, and links. 'repro' is an answer plus pasted commands and a last-checked date. Use each of the last two at most once.",
+    "fileOrder: optional list of ids giving the order of the sections in the file. Ids left out follow in the order asked.",
+    "routes: optional. minutes shown for the short and full routes."
+  ],
+  "stages": [
+    {
+      "id": "frame",
+      "title": "Frame it",
+      "why": "This sets how deep to go and what vocabulary the archive uses."
+    }
+  ],
+  "routes": {
+    "short": {
+      "minutes": 15
+    },
+    "full": {
+      "minutes": 35
+    }
+  },
+  "fileOrder": [
+    "summary",
+    "topic",
+    "reader",
+    "qd",
+    "decisionmakers",
+    "beneficiaries",
+    "data",
+    "approaches",
+    "choices",
+    "results",
+    "repro",
+    "outcome",
+    "people",
+    "start"
+  ],
+  "questions": [
+    {
+      "id": "topic",
+      "heading": "What this is about",
+      "prompt": "What's this about?",
+      "hints": [],
+      "startingPoints": "about",
+      "stage": "frame",
+      "short": true
+    },
+    {
+      "id": "reader",
+      "heading": "Who might come back to this",
+      "prompt": "Who might come back to this, and what would they be trying to do?",
+      "hints": [
+        "Who would open this, and when?",
+        "What would they need to find out?"
+      ],
+      "stage": "frame",
+      "short": true
+    },
+    {
+      "id": "summary",
+      "heading": "Summary (3 lines)",
+      "prompt": "If you had 30 seconds, how would you describe what this was and where it ended up?",
+      "hints": [
+        "What was it?",
+        "Where did it end up?"
+      ],
+      "short": true,
+      "maxSentences": 3,
+      "stage": "frame"
+    },
+    {
+      "id": "qd",
+      "heading": "Question and decision",
+      "prompt": "What question were you answering, and what decision did it feed?",
+      "hints": [
+        "What was the question, and who asked it?",
+        "Which decision depended on the answer?"
+      ],
+      "short": true
+    },
+    {
+      "id": "decisionmakers",
+      "heading": "Decision-makers",
+      "prompt": "Who makes the decision this fed, and who has to agree to it?",
+      "hints": [
+        "Names or roles, and what each of them cares about.",
+        "Who can say yes or no, and who only advises?"
+      ],
+      "short": true
+    },
+    {
+      "id": "beneficiaries",
+      "heading": "Beneficiaries and personas",
+      "prompt": "Who benefits from this, and what are they trying to do?",
+      "hints": [
+        "Who uses the result, and who feels the impact?",
+        "For each kind of person: their role, their goal, and what gets in their way."
+      ],
+      "short": true
+    },
+    {
+      "id": "data",
+      "heading": "Data (sources, quirks, owner)",
+      "prompt": "Which data did you use: sources, quirks, who owns it?",
+      "hints": [
+        "Where did the data come from, and how do you get it?",
+        "What is odd about it, and who owns it?"
+      ]
+    },
+    {
+      "id": "choices",
+      "heading": "Key choices and rationale",
+      "prompt": "Which choices mattered most, and why did you make them?",
+      "hints": [
+        "What were the options at the time?",
+        "Why did you pick this one?"
+      ]
+    },
+    {
+      "id": "approaches",
+      "heading": "Approaches tried (including dead ends and why they failed)",
+      "prompt": "What did you try, including dead ends and why they failed?",
+      "hints": [
+        "What was the idea, and what did you expect?",
+        "What happened, and what would you try instead?"
+      ],
+      "short": true,
+      "kind": "approaches"
+    },
+    {
+      "id": "results",
+      "heading": "Results and confidence",
+      "prompt": "What came out of it, and how sure are you?",
+      "hints": [
+        "What works, and how well? Give numbers if you can.",
+        "Compared with what: a baseline, or the way it was done before?"
+      ],
+      "short": true
+    },
+    {
+      "id": "repro",
+      "heading": "Reproducibility (repo, env, commands, last verified)",
+      "prompt": "How would someone re-run it, and when did you last check it works?",
+      "hints": [
+        "What environment does it need?",
+        "In what order do you run things?"
+      ],
+      "kind": "repro"
+    },
+    {
+      "id": "outcome",
+      "heading": "Outcome",
+      "prompt": "What happened to it in the end?",
+      "hints": [
+        "What changed because of it?",
+        "Who is using it now, or what replaced it?"
+      ]
+    },
+    {
+      "id": "people",
+      "heading": "People and links",
+      "prompt": "Who should someone talk to, and what can each of them help with? Which links matter?",
+      "hints": [
+        "For each person: what they know best.",
+        "Which documents or dashboards would you open first?"
+      ]
+    },
+    {
+      "id": "start",
+      "heading": "If you came back to this: start here",
+      "prompt": "If you came back to this, where would you start?",
+      "hints": [
+        "What would you read or run first?",
+        "What would you check before trusting it?"
+      ],
+      "short": true
+    }
+  ]
+}
