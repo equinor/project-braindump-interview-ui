@@ -10,6 +10,7 @@ The plain-text wireframes are in `../spike-e-audio-interview/`.
 ## Run
 
 ```sh
+npm install          # once after cloning; installs ONNX Runtime and the other dependencies
 npm run dev          # opens on http://127.0.0.1:5173 (real speech model if its files are present)
 npm test             # domain rules: routes, markdown template, links, file name
 npm run build
