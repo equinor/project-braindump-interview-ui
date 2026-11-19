@@ -9,6 +9,8 @@ The plain-text wireframes are in `../spike-e-audio-interview/`.
 
 ## Run
 
+After cloning the repository, install dependencies once, then start the app:
+
 ```sh
 npm install          # once after cloning; installs ONNX Runtime and the other dependencies
 npm run dev          # prepares the speech model on first start, then opens http://127.0.0.1:5173
@@ -19,6 +21,19 @@ npm run screenshots  # after a build: drives the app with a fake microphone, sav
 
 The first `npm run dev` downloads and verifies about 631 MiB of speech model files. Later starts reuse the local copy.
 An internet connection is needed for the first start; audio stays on the computer.
+
+If `npm run dev` reports that `vite` is missing, or an `ENOENT` under `node_modules`, run `npm install` from this
+folder. Only if `npm install` itself fails with a proxy/network error (for example, an HTTP 407 or “could not connect
+to proxy”) and the saved proxy settings are stale, clear them and retry:
+
+```sh
+npm config delete proxy --location=user
+npm config delete https-proxy --location=user
+npm install
+```
+
+These commands remove npm's user-level proxy settings. Do not use them if your network requires a proxy; ask your
+IT team for the correct proxy settings instead.
 
 Open it in Chrome. The first screen shows "Transcription: getting ready N%", then "Transcription ready".
 Add `?stub=fail` to see the could-not-start state.
