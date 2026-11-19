@@ -4,6 +4,7 @@
   "version": "0.1.0",
   "type": "module",
   "scripts": {
+    "predev": "npm run prepare:model",
     "dev": "node scripts/copy-ort-assets.mjs && vite --host 127.0.0.1",
     "build": "node scripts/copy-ort-assets.mjs && tsc -b && vite build",
     "test": "vitest run",

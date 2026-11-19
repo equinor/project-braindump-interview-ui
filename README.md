@@ -11,11 +11,14 @@ The plain-text wireframes are in `../spike-e-audio-interview/`.
 
 ```sh
 npm install          # once after cloning; installs ONNX Runtime and the other dependencies
-npm run dev          # opens on http://127.0.0.1:5173 (real speech model if its files are present)
+npm run dev          # prepares the speech model on first start, then opens http://127.0.0.1:5173
 npm test             # domain rules: routes, markdown template, links, file name
 npm run build
 npm run screenshots  # after a build: drives the app with a fake microphone, saves screenshots/
 ```
+
+The first `npm run dev` downloads and verifies about 631 MiB of speech model files. Later starts reuse the local copy.
+An internet connection is needed for the first start; audio stays on the computer.
 
 Open it in Chrome. The first screen shows "Transcription: getting ready N%", then "Transcription ready".
 Add `?stub=fail` to see the could-not-start state.
@@ -59,8 +62,9 @@ start (title, topic, author, repo, status) and Details for finding this at the e
 - Real: the flow, the ten questions and two routes, the About form, the approaches list (idea, why it worked or
   failed, any number of links), the review screen, saving the file, resuming after a reload, typing, recording,
   uploading audio, the one-recording-at-a-time rule, the 5-minute cap, and discarding audio once it is text.
-- Speech model: run `npm run prepare:model` in this app to download and verify the pinned Parakeet model into
-  `public/models`. Without those files, the app uses a clearly labeled demo transcriber with placeholder text.
+- Speech model: `npm run dev` downloads and verifies the pinned Parakeet model into `public/models` when it is
+  missing. You can also run `npm run prepare:model` explicitly. Without those files, the app uses a clearly labeled
+  demo transcriber with placeholder text.
   Parakeet, parakeet.js and onnxruntime-web are not on the company tech radar, so check that before production.
 - Checked without a browser: `node scripts/smoke-parakeet.mjs clip.wav` loads the real model in Node (CPU) and
   transcribes a 16 kHz mono WAV. It proves the files and library work, not the browser path (worker, WebGPU, microphone).

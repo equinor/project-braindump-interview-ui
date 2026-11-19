@@ -43,6 +43,7 @@ for (const file of files) {
     valid = false;
   }
   if (!valid) {
+    console.log(`Downloading and verifying ${file.name} from the pinned speech model.`);
     const url = `https://huggingface.co/${repo}/resolve/${revision}/${file.name}?download=true`;
     const response = await fetch(url);
     if (!response.ok) throw new Error(`Could not download ${file.name}: ${response.status}`);
